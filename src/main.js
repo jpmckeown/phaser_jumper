@@ -1,1 +1,2 @@
-console.log('Jumping Jehoshapat!')
+import Phaser from './lib/phaser.js';
+console.dir(Phaser);
