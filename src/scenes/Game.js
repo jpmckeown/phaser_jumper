@@ -6,7 +6,8 @@ export default class Game extends Phaser.Scene
   }
   preload() {
     this.load.image('background', 'assets/bg_layer1.png');
-    this.load.image('platform', 'assets/tile_ground.png')
+    this.load.image('platform', 'assets/tile_ground.png');
+    this.load.image('player-stand', 'assets/sheep_normal.png');
   }
   create() {
     this.add.image(240, 320, 'background');
@@ -23,6 +24,8 @@ export default class Game extends Phaser.Scene
       const body = platform.body
       body.updateFromGameObject()
     }
-    this.physics.add.image(240, 320, 'platform');
+    
+    const player = this.physics.add.sprite(240, 320, 'player-stand');
+    this.physics.add.collider(platforms, player);
   }
 }
