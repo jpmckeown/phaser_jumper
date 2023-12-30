@@ -1,7 +1,11 @@
-import Phaser from "../lib/phaser.js";
+import Phaser from "../lib/phaser.js"
+import Carrot from "../game/Carrot.js"
+
 export default class Game extends Phaser.Scene {
   /** @type {Phaser.Physics.Arcade.StaticGroup} */
   platforms;
+  /** @type {Phaser.Physics.Arcade.Group} */
+  carrots
   /** @type {Phaser.Physics.Arcade.Sprite} */
   player;
   /** @type {Phaser.Types.Input.Keyboard.CursorKeys} */
@@ -15,6 +19,7 @@ export default class Game extends Phaser.Scene {
     this.load.image('background', 'assets/bg_layer1.png')
     this.load.image('platform', 'assets/tile_ground.png')
     this.load.image('player-stand', 'assets/sheep_normal.png')
+    this.load.image('reward', 'assets/tile_grass_50.png')
     this.cursors = this.input.keyboard.createCursorKeys()
   }
 
@@ -48,6 +53,13 @@ export default class Game extends Phaser.Scene {
 
     this.cameras.main.startFollow(this.player)
     this.cameras.main.setDeadzone(this.scale.width * 1.5)
+
+    this.carrots = this.physics.add.group({
+      classType: Carrot
+    })
+    this.carrots.get(240, 320, 'carrot')
+
+    this.physics.add.collider(this.platforms, this.carrots)
   }
 
   update(t, dt) {
