@@ -71,6 +71,8 @@ export default class Game extends Phaser.Scene {
       if (platform.y >= scrollY + 700) {
         platform.y = scrollY - Phaser.Math.Between(50, 100);
         platform.body.updateFromGameObject();
+
+        this.addCarrotAbove(platform)
       }
     });
 
@@ -103,5 +105,19 @@ export default class Game extends Phaser.Scene {
     else if (sprite.x > gameWidth + halfWidth) {
       sprite.x = -halfWidth
     }
+  }
+
+  /** @param {Phaser.GameObjects.Sprite} sprite */
+  addCarrotAbove(sprite) {
+    const y = sprite.y - sprite.displayHeight
+
+    //** @type {Phaser.Physics.Arcade.Sprite} */
+    const carrot = this.carrots.get(sprite.x, y, 'carrot')
+
+    this.add.existing(carrot)
+
+    carrot.body.setSize(carrot.width, carrot.height)
+    
+    return carrot
   }
 }
