@@ -60,6 +60,8 @@ export default class Game extends Phaser.Scene {
     this.carrots.get(240, 320, 'carrot')
 
     this.physics.add.collider(this.platforms, this.carrots)
+
+    this.physics.add.overlap(this.player, this.carrorts, this.handleCollectCarror, undefined, this)
   }
 
   update(t, dt) {
@@ -115,9 +117,15 @@ export default class Game extends Phaser.Scene {
     const carrot = this.carrots.get(sprite.x, y, 'carrot')
 
     this.add.existing(carrot)
-
-    carrot.body.setSize(carrot.width, carrot.height)
-    
+    carrot.body.setSize(carrot.width, carrot.height) 
     return carrot
+  }
+
+  /** @param {Phaser.Physics.Arcade.Spirit} player
+   * @param {Carrot} carrot
+   */
+  handleCollectCarror(player, carrot) {
+    this.carrots.killAndHide(carrot)
+    this.physics.disableBody(carrot.body)
   }
 }
