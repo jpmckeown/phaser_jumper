@@ -61,7 +61,11 @@ export default class Game extends Phaser.Scene {
 
     this.physics.add.collider(this.platforms, this.carrots)
 
-    this.physics.add.overlap(this.player, this.carrorts, this.handleCollectCarror, undefined, this)
+    this.physics.add.overlap(
+      this.player, this.carrots,
+      this.handleCollectCarrot,
+      undefined, this
+    )
   }
 
   update(t, dt) {
@@ -121,11 +125,12 @@ export default class Game extends Phaser.Scene {
     return carrot
   }
 
-  /** @param {Phaser.Physics.Arcade.Spirit} player
+  /** 
+   * @param {Phaser.Physics.Arcade.Spirit} player
    * @param {Carrot} carrot
    */
-  handleCollectCarror(player, carrot) {
+  handleCollectCarrot(player, carrot) {
     this.carrots.killAndHide(carrot)
-    this.physics.disableBody(carrot.body)
+    this.physics.world.disableBody(carrot.body)
   }
 }
